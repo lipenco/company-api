@@ -4,6 +4,7 @@ gem "sinatra-contrib"
 gem "typhoeus"
 
 gem 'json'
+gem 'rabl'
 gem 'data_mapper'
 
 # When developing an app locally you can use SQLite which is a relational

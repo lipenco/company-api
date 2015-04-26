@@ -11,7 +11,6 @@ class Company
   property :country, String, :length => 255
   property :email, String, :length => 255
   property :phone, String, :length => 255
-
   has n, :directors
 
   validates_presence_of :name, :address, :city, :country

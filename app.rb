@@ -3,8 +3,17 @@
 require 'bundler'
 Bundler.require
 
+root = File.expand_path File.dirname(__FILE__)
+
 require_relative 'models/company'
 require_relative 'models/director'
+
+Rabl.configure do |config|
+  config.include_json_root = false
+  config.include_child_root = false
+end
+
+
 
 # Setup DataMapper with a database URL. On Heroku, ENV['DATABASE_URL'] will be
 # set, when working locally this line will fall back to using SQLite in the
@@ -23,8 +32,7 @@ namespace '/api/v:version' do
   get '/companies' do
     content_type :json
     @companies = Company.all(:order => :created_at.desc)
-
-    @companies.to_json
+    Rabl::Renderer.json(@companies, 'company', view_path: './views')
   end
 
 
@@ -47,7 +55,7 @@ namespace '/api/v:version' do
     @company = Company.get(params[:id].to_i)
 
     if @company
-      @company.to_json
+      Rabl::Renderer.json(@company, 'company', view_path: './views')
     else
       halt 404
     end
