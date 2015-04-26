@@ -14,5 +14,9 @@ class Company
 
   has n, :directors
 
+  validates_presence_of :name, :address, :city, :country
+
+
+
 
 end

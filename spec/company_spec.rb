@@ -50,4 +50,18 @@ describe "Company" do
     expect(last_response.body).to eq("")
   end
 
+  it "it validates presence of name, city, coutry" do
+    company.name = ""
+    company.save
+    get "/api/v1/companies/#{company.id}"
+    expect(last_response).to_not be_ok
+  end
+
+  it "it saves model instance without email" do
+    company.email = ""
+    company.save
+    get "/api/v1/companies/#{company.id}"
+    expect(last_response.body).to eq(Company.last.to_json)
+  end
+
 end
