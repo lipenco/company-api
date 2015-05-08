@@ -21,3 +21,5 @@ end
 group :production do
   gem 'dm-postgres-adapter'
 end
+
+gem 'rack-cors', :require => 'rack/cors'

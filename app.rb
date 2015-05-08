@@ -13,6 +13,18 @@ Rabl.configure do |config|
   config.include_child_root = false
 end
 
+require 'rack/cors'
+
+use Rack::Cors do |config|
+  config.allow do |allow|
+    allow.origins '*'
+    allow.resource '*',
+      :headers => :any,
+      :methods => [:get, :post, :delete, :put, :options],
+      :max_age => 0
+  end
+end
+
 
 
 # Setup DataMapper with a database URL. On Heroku, ENV['DATABASE_URL'] will be
