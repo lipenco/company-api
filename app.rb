@@ -3,6 +3,8 @@
 require 'bundler'
 Bundler.require
 
+require 'pry'
+
 root = File.expand_path File.dirname(__FILE__)
 
 require_relative 'models/company'
@@ -51,15 +53,23 @@ namespace '/api/v:version' do
 
 
   # CREATE: Route to create a new Company
-  post '/company' do
+  post '/companies' do
     content_type :json
-    @company = Company.new()
+    @company = Company.new({
+       name: params[:name],
+       address: params[:address],
+       country: params[:country],
+       email: params[:email],
+       phone: params[:phone],
+       city: params[:city]
+     })
     if @company.save
       @company.to_json
     else
       halt 500
     end
   end
+
 
   # READ: Route to show a specific Company based on its `id`
   get '/companies/:id' do
