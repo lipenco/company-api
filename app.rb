@@ -62,7 +62,8 @@ namespace '/api/v:version' do
        city: params[:city]
      })
     if @company.save
-      @company.to_json
+      Rabl::Renderer.json(@company, 'company', view_path: './views')
+      # @company.to_json
     else
       halt 500
     end
