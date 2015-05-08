@@ -23,3 +23,4 @@ group :production do
 end
 
 gem 'rack-cors', :require => 'rack/cors'
+gem 'sinatra-cross_origin'

@@ -2,6 +2,7 @@
 # listed in Gemfile.
 require 'bundler'
 Bundler.require
+require 'pry'
 
 root = File.expand_path File.dirname(__FILE__)
 
@@ -24,6 +25,7 @@ use Rack::Cors do |config|
       :max_age => 0
   end
 end
+
 
 
 
@@ -52,7 +54,14 @@ namespace '/api/v:version' do
   # CREATE: Route to create a new Company
   post '/company' do
     content_type :json
-    @company = Company.new(params)
+    @company = Company.new({
+       name: params[:name],
+       address: params[:address],
+       country: params[:country],
+       email: params[:email],
+       phone: params[:phone],
+       city: params[:city]
+     })
 
     if @company.save
       @company.to_json
@@ -76,9 +85,15 @@ namespace '/api/v:version' do
   # UPDATE: Route to update a Company
   put '/companies/:id' do
     content_type :json
-
     @company = Company.get(params[:id].to_i)
-    @company.update(params)
+    @company.update({
+       name: params[:name],
+       address: params[:address],
+       country: params[:country],
+       email: params[:email],
+       phone: params[:phone],
+       city: params[:city]
+     })
 
     if @company.save
       @company.to_json
@@ -89,6 +104,7 @@ namespace '/api/v:version' do
 
   # DELETE: Route to delete a Company
   delete '/companies/:id/delete' do
+
     content_type :json
     @company = Company.get(params[:id].to_i)
 
