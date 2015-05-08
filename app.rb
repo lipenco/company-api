@@ -2,7 +2,6 @@
 # listed in Gemfile.
 require 'bundler'
 Bundler.require
-require 'pry'
 
 root = File.expand_path File.dirname(__FILE__)
 
@@ -54,15 +53,7 @@ namespace '/api/v:version' do
   # CREATE: Route to create a new Company
   post '/company' do
     content_type :json
-    @company = Company.new({
-       name: params[:name],
-       address: params[:address],
-       country: params[:country],
-       email: params[:email],
-       phone: params[:phone],
-       city: params[:city]
-     })
-
+    @company = Company.new()
     if @company.save
       @company.to_json
     else
