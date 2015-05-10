@@ -103,7 +103,7 @@ namespace '/api/v:version' do
   end
 
   # DELETE: Route to delete a Company
-  delete '/companies/:id/delete' do
+  delete '/companies/:id' do
 
     content_type :json
     @company = Company.get(params[:id].to_i)
