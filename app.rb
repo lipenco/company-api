@@ -13,8 +13,6 @@ Rabl.configure do |config|
   config.include_child_root = false
 end
 
-require 'pry'
-
 require 'rack/cors'
 
 use Rack::Cors do |config|
