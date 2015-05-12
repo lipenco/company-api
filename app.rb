@@ -13,6 +13,8 @@ Rabl.configure do |config|
   config.include_child_root = false
 end
 
+require 'pry'
+
 require 'rack/cors'
 
 use Rack::Cors do |config|
@@ -61,6 +63,9 @@ namespace '/api/v:version' do
        phone: params[:phone],
        city: params[:city]
      })
+    if params[:directors]
+      update_directors(@company, params[:directors])
+    end
     if @company.save
       Rabl::Renderer.json(@company, 'company', view_path: './views')
       # @company.to_json
@@ -94,7 +99,9 @@ namespace '/api/v:version' do
        phone: params[:phone],
        city: params[:city]
      })
-
+    if params[:directors]
+      update_directors(@company, params[:directors])
+    end
     if @company.save
       @company.to_json
     else
@@ -115,7 +122,22 @@ namespace '/api/v:version' do
     end
   end
 
+  def update_directors(company, params)
+    JSON.parse(params).each do |director|
+      if director['id']
+        d = Director.get(director['id'].to_i)
+        d.update({name: director['name'], surname: director['surname']})
+        d.save
+      else
+        d = Director.new({name: director['name'], surname: director['surname']})
+        company.directors.push(d)
+      end
+    end
+  end
+
 end
+
+
 
 # If there are no Companys in the database, add a few.
 if Company.count == 0
