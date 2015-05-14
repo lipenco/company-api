@@ -120,6 +120,16 @@ namespace '/api/v:version' do
     end
   end
 
+  delete '/directors/:id' do
+    content_type :json
+    @director = Director.get(params[:id].to_i)
+    if @director.destroy
+      {:success => "ok"}.to_json
+    else
+      halt 500
+    end
+  end
+
   def update_directors(company, params)
     JSON.parse(params).each do |director|
       if director['id']
